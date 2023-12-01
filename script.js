@@ -10,10 +10,12 @@ const guessInp = document.querySelector('.guess');
 const numberEl = document.querySelector('.number');
 const body = document.querySelector('body');
 const againBtn = document.querySelector('.again');
+const highScoreEl = document.querySelector('.highscore');
 
 // 1 - 20
 let secretNumber = getRandomNumber();
 let score = 20;
+let highScore = 0;
 
 scoreEl.textContent = score;
 
@@ -27,17 +29,15 @@ document.querySelector('.check').addEventListener('click', function () {
     numberEl.textContent = secretNumber;
     body.style.backgroundColor = '#60b347';
     numberEl.style.width = '30rem';
-  } else if (guess > secretNumber) {
-    if (score > 1) {
-      messageEl.textContent = '📈 Too high!';
-      scoreEl.textContent = --score;
-    } else {
-      messageEl.textContent = '💥 You lost the game!';
-      scoreEl.textContent = 0;
+
+    if (score > highScore) {
+      highScore = score;
+      highScoreEl.textContent = highScore;
     }
-  } else if (guess < secretNumber) {
+  } else if (guess !== secretNumber) {
     if (score > 1) {
-      messageEl.textContent = '📉 Too low!';
+      messageEl.textContent =
+        guess > secretNumber ? '📈 Too high!' : '📉 Too low!';
       scoreEl.textContent = --score;
     } else {
       messageEl.textContent = '💥 You lost the game!';
